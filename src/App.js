@@ -11,10 +11,22 @@ class App extends Component {
       currentGuess:"",
       guesses:[],
       count:0,
-      randomNum: this.randomNumFunc()
+      randomNum: this.randomNumFunc(),
+      result:''
     }
     this.setGuess=this.setGuess.bind(this)
     this.onSubmitGuess=this.onSubmitGuess.bind(this)
+    this.newGame=this.newGame.bind(this)
+  }
+
+  newGame(){
+    this.setState({
+      currentGuess:"",
+      guesses:[],
+      count:0,
+      randomNum: this.randomNumFunc(),
+      result:''
+    })
   }
 
 randomNumFunc() {
@@ -34,8 +46,19 @@ randomNumFunc() {
   this.setState({
     currentGuess: "",
     count:this.state.count +1,
-    guesses: this.state.guesses.concat([this.state.currentGuess]) 
+    guesses: this.state.guesses.concat([this.state.currentGuess]),
+    result:this.compareRanNum(this.state.randomNum, this.state.currentGuess)
   })
+  }
+
+  compareRanNum(randomNum, currentGuess) {
+    if (currentGuess == randomNum){
+      return "THATS THE RIGHT NUMBER"
+    }
+    else if (currentGuess >randomNum+10 || currentGuess < randomNum-10) {
+      return 'COLD'
+    }
+    return 'HOT'; 
   }
 
   render() {
@@ -44,10 +67,10 @@ randomNumFunc() {
         <header className="App-header">
           <h1 className="App-title">HOT or COLD</h1>
           <button onClick={() => console.log("what")}>WHAT?</button>
-          <button onClick={() => console.log("new game")}>+NEW GAME</button>
+          <button onClick={() => this.newGame()}>+NEW GAME</button>
         </header>
         <div className="guess-box">
-          <h2>Hot or cold(tochange)</h2>
+          <h2>{this.state.result}</h2>
           <GuessInput
             value={this.state.currentGuess}
             onChange={this.setGuess}
