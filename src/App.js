@@ -10,11 +10,18 @@ class App extends Component {
     this.state={
       currentGuess:"",
       guesses:[],
-      count:0
+      count:0,
+      randomNum: this.randomNumFunc()
     }
     this.setGuess=this.setGuess.bind(this)
     this.onSubmitGuess=this.onSubmitGuess.bind(this)
   }
+
+randomNumFunc() {
+  const targetNumber = Math.floor(Math.random() * (100 - 0) + 0);
+  console.log(targetNumber)
+  return targetNumber
+}
 
   setGuess(currentGuess) {
     this.setState({
