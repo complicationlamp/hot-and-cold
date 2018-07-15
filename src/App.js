@@ -12,6 +12,8 @@ class App extends Component {
       guesses:[],
       count:0
     }
+    this.setGuess=this.setGuess.bind(this)
+    this.onSubmitGuess=this.onSubmitGuess.bind(this)
   }
 
   setGuess(currentGuess) {
@@ -25,7 +27,7 @@ class App extends Component {
   this.setState({
     currentGuess: "",
     count:this.state.count +1,
-    guesses: this.state.guesses.push(this.state.currentGuess) 
+    guesses: this.state.guesses.concat([this.state.currentGuess]) 
   })
   }
 
@@ -39,9 +41,17 @@ class App extends Component {
         </header>
         <div className="guess-box">
           <h2>Hot or cold(tochange)</h2>
-          <GuessInput/>
-          <h3>Guess # <strong>7(to change to counter)!</strong></h3>
-          <p>(list previous guesses here)</p>
+          <GuessInput
+            value={this.state.currentGuess}
+            onChange={this.setGuess}
+            onUpdate={this.onSubmitGuess}
+          />
+          <h3>Guess # <strong>{this.state.count}</strong></h3>
+          <p>{
+            this.state.guesses.map(number => {
+              return number + " "
+            })
+            }</p>
         </div>
       </div>
     );
